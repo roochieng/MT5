@@ -14,4 +14,3 @@ if not mt5.initialize():
     print("initialize() failed, error code =", mt5.last_error())
     quit()
 print(mt5.account_info())
-
