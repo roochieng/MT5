@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Load login credentials from environment variables
-my_login = os.environ.get('LOGIN')
-my_password = os.environ.get('PASSWORD')
-my_server = os.environ.get('SERVER')
+my_login = os.environ.get('AVATRADE_LOGIN')
+my_password = os.environ.get('AVATRADE_PASSWORD')
+my_server = os.environ.get('AVATRADE_SERVER')
 
 # Initialize MetaTrader 5 connection
 if not mt5.initialize():
