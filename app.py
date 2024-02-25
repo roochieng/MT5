@@ -3,28 +3,66 @@ from flask import Flask, render_template, request
 from config import app, db, bcrypt
 from storage.trade_data import Trade
 from storage.market_data import MarketData
+import MetaTrader5 as mt5
+import os
+from dotenv import load_dotenv
+import time
 
-@app.route('/')
-def index():
-    return 'Welcome to the trading app!'
+load_dotenv()
 
-@app.route('/insert_trade', methods=['POST'])
-def insert_trade():
-    entry_price = request.form['entry_price']
-    exit_price = request.form['exit_price']
-    stop_loss = request.form['stop_loss']
-    take_profit = request.form['take_profit']
-    
-    new_trade = Trade(entry_price=entry_price, exit_price=exit_price, stop_loss=stop_loss, take_profit=take_profit)
-    db.session.add(new_trade)
-    db.session.commit()
-    
-    return 'Trade inserted successfully!'
+# Load login credentials from environment variables
+my_login = os.environ.get('AVATRADE_LOGIN')
+my_password = os.environ.get('AVATRADE_PASSWORD')
+my_server = os.environ.get('AVATRADE_SERVER')
 
-@app.route('/trades')
-def get_trades():
-    trades = Trade.query.all()
-    return render_template('trades.html', trades=trades)
+# Initialize MetaTrader 5 connection
+if not mt5.initialize():
+    print("initialize() failed, error code =", mt5.last_error())
+    quit()
+# Main loop for scalping
+while True:
+    # Fetch real-time market data
+    symbol_info = mt5.symbol_info("EURUSD")
+    if symbol_info is None:
+        print("Failed to get symbol info, error code =", mt5.last_error())
+        continue
+
+    # Apply scalping strategy
+    if symbol_info.bid > symbol_info.ask:
+        # Place buy order
+        result = mt5.order_send(
+            symbol="EURUSD",
+            action=mt5.ORDER_BUY,
+            volume=1.0,
+            type=mt5.ORDER_TYPE_MARKET,
+            price=0.0,  # For market orders, price is usually set to 0
+            sl=0.0,     # Optional stop-loss level
+            tp=0.0,     # Optional take-profit level
+            magic=0     # Optional magic number
+        )
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            print("Failed to place buy order, error code =", result.retcode)
+    elif symbol_info.bid < symbol_info.ask:
+        # Place sell order
+        result = mt5.order_send(
+            symbol="EURUSD",
+            action=mt5.ORDER_BUY,
+            volume=1.0,
+            type=mt5.ORDER_TYPE_MARKET,
+            price=0.0,  # For market orders, price is usually set to 0
+            sl=0.0,     # Optional stop-loss level
+            tp=0.0,     # Optional take-profit level
+            magic=0     # Optional magic number
+        )
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            print("Failed to place sell order, error code =", result.retcode)
+
+    # Sleep for some time before the next iteration
+    time.sleep(1)
+
+# Shutdown MetaTrader 5 connection after use
+mt5.shutdown()
+# If not using web page no need to define routs
 
 if __name__ == '__main__':
     app.run(debug=True)
