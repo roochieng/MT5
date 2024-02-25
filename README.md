@@ -16,21 +16,17 @@ Trading in financial markets involves buying and selling financial instruments s
 - Moving average crossover strategies: Buy and sell signals are generated based on the crossover of short-term and long-term moving averages, indicating potential trend reversals or continuations.
 ## Installation
 1. Clone the repository to your local machine:
-```
-git clone https://github.com/roochieng/MT5.git
-```
+    ```git clone https://github.com/roochieng/MT5.git```
 2. Install the required Python packages:
-```
-pip install -r requirements.txt
-```
+    ```pip install -r requirements.txt```
 3. Set up your MetaTrader 5 account and obtain login credentials.
 
 4. Create a .env file in the project directory and add your MetaTrader 5 login credentials:
-```
-LOGIN=your_mt5_login
-PASSWORD=your_mt5_password
-SERVER=your_mt5_server
-```
+    ```
+    LOGIN=your_mt5_login
+    PASSWORD=your_mt5_password
+    SERVER=your_mt5_server
+    ```
 
 ## Usage
 1. Run the Python scripts to execute different trading strategies.
