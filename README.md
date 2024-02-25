@@ -18,11 +18,13 @@ Trading in financial markets involves buying and selling financial instruments s
 1. Clone the repository to your local machine:
 
 ```
-        git clone https://github.com/roochieng/MT5.git
+    git clone https://github.com/roochieng/MT5.git
 ```
 2. Install the required Python packages:
 
-    ```pip install -r requirements.txt```
+```
+    pip install -r requirements.txt
+```
 3. Set up your MetaTrader 5 account and obtain login credentials.
 
 4. Create a .env file in the project directory and add your MetaTrader 5 login credentials:
