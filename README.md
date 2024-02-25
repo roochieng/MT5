@@ -36,3 +36,6 @@ SERVER=your_mt5_server
 1. Run the Python scripts to execute different trading strategies.
 2. Monitor the console output for trade signals, entry/exit points, and trading performance metrics.
 3. Analyze the generated plots and visualizations to evaluate the effectiveness of the trading strategies.
+
+## Contributing
+Contributions are welcome! If you have any suggestions, feature requests, or bug reports, please open an issue or submit a pull request.
