@@ -1,7 +1,8 @@
 # app.py
 from flask import Flask, render_template, request
 from config import app, db, bcrypt
-from storage.data_storage import Trade
+from storage.trade_data import Trade
+from storage.market_data import MarketData
 
 @app.route('/')
 def index():
